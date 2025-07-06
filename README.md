@@ -1,0 +1,1 @@
+Este sistema tem como principal objectivo fazer a gestão dos consumiveis existentes no Ministério.
