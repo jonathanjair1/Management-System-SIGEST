@@ -10,6 +10,9 @@ if (!isset($_SESSION['user'])) {
 
 include "../conexao/conexao.php";
 
+$sql_fornecedores = "SELECT id_fornecedor, nome FROM fornecedor ORDER BY nome ASC";
+$result_fornecedores = $conn->query($sql_fornecedores);
+
 $mensagem = '';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -19,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $fornecedor = (string) $_POST['fornecedor'];
     $data = (string) $_POST['data'];
 
-    $sql = "INSERT INTO requisicoes (nome,producto, quantidade, fornecedor, data_requisicao) values (?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO requisicoes (nome_user,producto, quantidade, fornecedor, data_requisicao) values (?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
 
     if (!$stmt) {
@@ -30,14 +33,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if ($stmt->execute()) {
         $mensagem = "Solicitação enviada com sucesso!";
-        $classe_mensagem = "sucesso";
     } else {
         $mensagem = "Erro na solicitação: " . $stmt->error;
         $classe_mensagem = "erro";
     }
 
     $stmt->close();
-    $mysqli->close();
+    $conn->close();
 }
 ?>
 
@@ -59,7 +61,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <br>
         <input type="text" id="quantidade" name="quantidade" placeholder="Quantidade" required>
         <br>
-        <input type="text" id="fornecedor" name="fornecedor" placeholder="Escolher Fornecedor" required>
+        <label for="id_fornecedor">Fornecedor:</label>
+            <select name="fornecedor" id="fornecedor" required>
+                <option value="">Selecione um fornecedor</option>
+                <?php while ($fornecedor = $result_fornecedores->fetch_assoc()): ?>
+                    <option value="<?= $fornecedor['id_fornecedor'] ?>">
+                        <?= htmlspecialchars($fornecedor['nome']) ?>
+                    </option>
+                <?php endwhile; ?>
+            </select>
         <br>
         <input type="date" name="data" id="data" required>
         <br>

@@ -79,7 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <select name="fornecedor" id="fornecedor" required>
                 <option value="">Selecione um fornecedor</option>
                 <?php while ($fornecedor = $result_fornecedores->fetch_assoc()): ?>
-                    <option value="<?= $fornecedor['id'] ?>">
+                    <option value="<?= $fornecedor['id_fornecedor'] ?>">
                         <?= htmlspecialchars($fornecedor['nome']) ?>
                     </option>
                 <?php endwhile; ?>
