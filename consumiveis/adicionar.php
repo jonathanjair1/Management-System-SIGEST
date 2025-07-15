@@ -8,12 +8,18 @@ if (!isset($_SESSION['user'])) {
 
 require_once '../conexao/conexao.php';
 
+$sql_fornecedores = "SELECT id_fornecedor, nome FROM fornecedor ORDER BY nome ASC";
+$result_fornecedores = $conn->query($sql_fornecedores);
+
+$mensagem = '';
+$classe_mensagem = '';
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $nome_prod = trim($_POST['producto']);
     $descricao = trim($_POST['descricao']);
-    $quantidade = trim($_POST['quantidade']);
-    $fornecedor = trim($_POST['fornecedores']);
+    $quantidade = intval($_POST['quantidade']);
+    $fornecedor = trim($_POST['fornecedor']);
     $data = $_POST['data'];
 
     if (empty($nome_prod) || empty($descricao) || empty($quantidade) || empty($fornecedor) || empty($data)) {
@@ -27,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             die("Erro na preparação da query: " . $conn->error);
         }
 
-        $stmt->bind_param("sssss", $nome_prod, $descricao, $quantidade, $fornecedor, $data);
+        $stmt->bind_param("ssiss", $nome_prod, $descricao, $quantidade, $fornecedor, $data);
 
         if ($stmt->execute()) {
             $mensagem = "Produto adicionado com sucesso!";
@@ -69,10 +75,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <br><br>
             <input type="number" id="quantidade" name="quantidade" placeholder="Quantidade" required>
             <br><br>
-            <select name="fornecedores" id="forn" required>
-                <option value="">Escolha o Fornecedor</option>
-                <option value="HP">HP</option>
-                <option value="Dell">Dell</option>
+            <label for="id_fornecedor">Fornecedor:</label>
+            <select name="fornecedor" id="fornecedor" required>
+                <option value="">Selecione um fornecedor</option>
+                <?php while ($fornecedor = $result_fornecedores->fetch_assoc()): ?>
+                    <option value="<?= $fornecedor['id'] ?>">
+                        <?= htmlspecialchars($fornecedor['nome']) ?>
+                    </option>
+                <?php endwhile; ?>
             </select>
             <br><br>
             <input type="date" id="data" name="data" required>

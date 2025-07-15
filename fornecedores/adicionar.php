@@ -4,7 +4,7 @@
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-pt">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -12,6 +12,6 @@
     <title>Cadastrar Fornecedores</title>
 </head>
 <body>
-    
+   <h1>Esta a jobar a conection</h1> 
 </body>
 </html>
