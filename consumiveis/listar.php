@@ -74,6 +74,8 @@ $result = $conn->query($sql);
             </tbody>
         </table>
     </div>
+
+    <a href="../menu.php">Voltar para o Menu Principal</a>
 </body>
 
 </html>

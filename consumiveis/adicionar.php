@@ -91,6 +91,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </div>
     </form>
 
+    <a href="../menu.php">Voltar para o Menu Principal</a>
+
 </body>
 
 </html>

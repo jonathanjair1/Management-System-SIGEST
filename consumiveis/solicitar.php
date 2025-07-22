@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if ($stmt->execute()) {
         $mensagem = "Solicitação enviada com sucesso!";
     } else {
-        $mensagem = "Erro na solicitação: " . $stmt->error;
+        $mensagem = "Erro ao enviar a solicitação: " . $stmt->error;
         $classe_mensagem = "erro";
     }
 
@@ -76,6 +76,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <button type="submit">Enviar</button>
 
     </form>
+
+    <a href="../menu.php">Voltar ao Menu Principal</a>
 </body>
 
 </html>
